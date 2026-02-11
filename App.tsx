@@ -1,27 +1,19 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import RetroWindow from './components/RetroWindow';
 import StablecoinChart from './components/StablecoinChart';
 import HitCounter from './components/HitCounter';
-import { RETRO_ICONS, STABLECOIN_HISTORY } from './constants';
+import { RETRO_ICONS } from './constants';
 import { AnalystReport } from './types';
-import { getAnalystReport } from './services/gemini';
 
 const App: React.FC = () => {
-  const [report, setReport] = useState<AnalystReport | null>(null);
-  const [isLoadingReport, setIsLoadingReport] = useState(false);
   const [showPlayer, setShowPlayer] = useState(true);
 
-  useEffect(() => {
-    const fetchReport = async () => {
-      setIsLoadingReport(true);
-      const dataStr = JSON.stringify(STABLECOIN_HISTORY);
-      const res = await getAnalystReport(dataStr);
-      setReport(res);
-      setIsLoadingReport(false);
-    };
-    fetchReport();
-  }, []);
+  const report: AnalystReport = {
+    summary: "Stablecoins are showing exponential growth despite the 56k modem lag. Total market cap has surged from $2.6B in 2018 to $160B in 2024 — a 6,000% increase that would make even the most bullish dot-com analyst blush.",
+    outlook: "Bullish on digital dollars, bearish on pets.com. Institutional adoption is accelerating and Tron's dominance continues to climb. We predict stablecoins will become the backbone of global remittances by 2026.",
+    hotTake: "Tron is the new GeoCities of finance — ugly, underestimated, and somehow everywhere!"
+  };
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 relative pb-20">
@@ -87,27 +79,20 @@ const App: React.FC = () => {
               </h3>
               
               <div className="bg-blue-50 p-4 border-2 border-dashed border-blue-400 mt-2 min-h-[150px]">
-                {isLoadingReport ? (
-                  <div className="flex flex-col items-center justify-center h-full italic text-gray-500">
-                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3N6Y3h6Y3h6Y3h6Y3h6Y3h6Y3h6Y3h6Y3h6Y3h6Y3h6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKMGpxP5OsuwO08/giphy.gif" className="w-8 mb-2" alt="loading" />
-                    Connecting to mainframe...
-                  </div>
-                ) : (
                   <div className="space-y-4">
                     <div>
                       <span className="font-bold underline">Market Summary:</span>
-                      <p className="text-sm mt-1">{report?.summary}</p>
+                      <p className="text-sm mt-1">{report.summary}</p>
                     </div>
                     <div>
                       <span className="font-bold underline">Year 2005 Outlook:</span>
-                      <p className="text-sm mt-1">{report?.outlook}</p>
+                      <p className="text-sm mt-1">{report.outlook}</p>
                     </div>
                     <div className="bg-yellow-100 p-2 border border-yellow-400">
                       <span className="font-bold text-red-600">HOT TAKE:</span>
-                      <p className="italic text-sm">"{report?.hotTake}"</p>
+                      <p className="italic text-sm">"{report.hotTake}"</p>
                     </div>
                   </div>
-                )}
               </div>
             </div>
           </RetroWindow>
