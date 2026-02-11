@@ -1,12 +1,12 @@
 
 export interface StablecoinData {
-  year: string;
-  eth: number;
+  date: string;
+  ethereum: number;
   tron: number;
+  solana: number;
   bnb: number;
   others: number;
   total: number;
-  annotation?: string;
 }
 
 export interface AnalystReport {
